@@ -32,7 +32,7 @@ __PACKAGE__->add(DB_MASTER => { test => <<SQL });
 CREATE TABLE metrics_values (
     metrics_id  INT UNSIGNED NOT NULL,
     resolution  ENUM('Y', 'YM', 'YMD', 'YMDH'),
-    aggregator  ENUM('count', 'sum', 'average', 'max', 'min'),
+    aggregator  ENUM('count', 'sum', 'avg', 'max', 'min'),
     ts          DATETIME     NOT NULL,
     val         INT(20)      NOT NULL,
     created_at  INT UNSIGNED NOT NULL,
