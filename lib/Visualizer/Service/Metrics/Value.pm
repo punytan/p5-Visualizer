@@ -1,12 +1,7 @@
 package Visualizer::Service::Metrics::Value;
 use sane;
 use parent 'Visualizer::Service';
-use Constant::Exporter (
-    EXPORT_OK => {
-        map { ($_ => $_) } qw/ ERROR_METRICS_NOT_FOUND /
-    }
-);
-
+use Visualizer::Constant 'ERROR_METRICS_NOT_FOUND';
 
 __PACKAGE__->add_validator(
     create_hourly => {

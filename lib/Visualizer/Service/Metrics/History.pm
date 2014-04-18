@@ -3,16 +3,12 @@ use sane;
 use parent 'Visualizer::Service';
 use Visualizer::DateTime::Iterator;
 use DateTime;
-use Constant::Exporter (
-    EXPORT_OK => {
-        map { ($_ => $_) } qw/ ERROR_METRICS_NOT_FOUND /
-    }
-);
+use Visualizer::Constant 'ERROR_METRICS_NOT_FOUND';
 
 __PACKAGE__->add_validator(
     get_y_resolution => {
-        metrics_id => { isa => 'Metrics::ID' },
-        year       => { isa => 'Metrics::Year'  },
+        metrics_id => { isa => 'Metrics::ID'   },
+        year       => { isa => 'Metrics::Year' },
         aggregator => {
             isa     => 'Metrics::Aggregator',
             default => 'sum',
