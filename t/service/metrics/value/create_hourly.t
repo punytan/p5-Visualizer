@@ -8,14 +8,13 @@ my $guards = Test::Alpaca->setup(
     }
 );
 
+sub dbh { Visualizer::Service::Metrics::Value->connect('DB_MASTER')->dbh }
+
 subtest 'success' => sub {
     my $guard = Test::Alpaca->init_database(
         DB_MASTER => {
             metrics => [
-                {
-                    metrics_name => 'foo',
-                    owner_id => 1,
-                }
+                { metrics_name => 'foo', owner_id => 1 }
             ],
         }
     );
@@ -27,7 +26,7 @@ subtest 'success' => sub {
                 datetime => '2014-03-04 00:00:00',
                 value    => 100,
             );
-            Visualizer::Service::Metrics::Value->connect('DB_MASTER')->dbh->selectall_arrayref(
+            dbh->selectall_arrayref(
                 "SELECT * FROM metrics_values",
                 { Slice => {} }
             );
@@ -35,15 +34,32 @@ subtest 'success' => sub {
         expect => [
             {
                 metrics_id => 1,
-                resolution => 'YMDH',
-                aggregator => 'count',
-                ts         => '2014-03-04 00:00:00',
-                val        => 100,
+                timestamp  => '2014-03-04 00:00:00',
+                value      => 100,
+                year       => 2014,
+                month      => 3,
+                day        => 4,
+                hour       => 0,
                 created_at => re(qr/\d+/),
                 updated_at => re(qr/\d+/),
             }
         ];
+};
 
+subtest 'fail' => sub {
+    test_is_deeply 'should raise validation error if datetime is not rounded',
+        run => sub {
+            Visualizer::Service::Metrics::Value->create_hourly(
+                name     => 'foo',
+                datetime => '2014-03-04 20:40:42',
+                value    => 200,
+            );
+        },
+        exception => sub {
+            my $e = shift;
+            isa_ok $e, 'Alpaca::Exception::ValidationError';
+            like $e, qr/Invalid value for 'datetime'/;
+        };
 };
 
 done_testing;

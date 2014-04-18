@@ -1,7 +1,11 @@
 package Visualizer::Service;
 use sane;
-use Visualizer::Types;
 use parent 'Alpaca::Service';
+use Visualizer::Types;
+use Time::Piece;
+
+sub as_epoch { shift; localtime->strptime(shift, "%Y-%m-%d %T")->epoch }
+sub strftime { shift; shift->strftime('%Y-%m-%d %T') }
 
 __PACKAGE__->config->add(
     DB_MASTER => {

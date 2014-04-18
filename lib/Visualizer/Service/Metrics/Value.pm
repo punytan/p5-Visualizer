@@ -10,15 +10,9 @@ use Constant::Exporter (
 
 __PACKAGE__->add_validator(
     create_hourly => {
-        name => {
-            isa => 'Metrics::Name',
-        },
-        datetime => {
-            isa => 'Metrics::DateTime',
-        },
-        value => {
-            isa => 'Metrics::Value',
-        },
+        name     => { isa => 'Metrics::Name'     },
+        datetime => { isa => 'Metrics::DateTime' },
+        value    => { isa => 'Metrics::Value'    },
     }
 );
 
@@ -46,12 +40,19 @@ sub create_hourly {
         my ($stmt, @bind) = $class->sql->insert(
             metrics_values => {
                 metrics_id => $metrics->{metrics_id},
-                resolution => 'YMDH',
-                aggregator => 'count',
-                ts         => $args->{datetime}, # TODO ignore minutes/seconds
-                val        => $args->{value},
+                timestamp  => $args->{datetime},
+                value      => $args->{value},
+                year       => \[ 'YEAR(?)',  $args->{datetime} ],
+                month      => \[ 'MONTH(?)', $args->{datetime} ],
+                day        => \[ 'DAY(?)',   $args->{datetime} ],
+                hour       => \[ 'HOUR(?)',  $args->{datetime} ],
                 created_at => $now,
                 updated_at => $now,
+            }, {
+                update => {
+                    value      => \'VALUES(valeu)',
+                    updated_at => \'VALUES(updated_at)',
+                }
             }
         );
         $dbh->do($stmt, undef, @bind);

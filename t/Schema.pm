@@ -30,14 +30,17 @@ SQL
 
 __PACKAGE__->add(DB_MASTER => { test => <<SQL });
 CREATE TABLE metrics_values (
-    metrics_id  INT UNSIGNED NOT NULL,
-    resolution  ENUM('Y', 'YM', 'YMD', 'YMDH'),
-    aggregator  ENUM('count', 'sum', 'avg', 'max', 'min'),
-    ts          DATETIME     NOT NULL,
-    val         INT(20)      NOT NULL,
-    created_at  INT UNSIGNED NOT NULL,
-    updated_at  INT UNSIGNED NOT NULL,
-    PRIMARY KEY (`metrics_id`, `resolution`, `aggregator`, `ts`)
+    metrics_id  INT     UNSIGNED NOT NULL,
+    timestamp   DATETIME         NOT NULL,
+    value       BIGINT           NOT NULL,
+    year        YEAR             NOT NULL,
+    month       TINYINT UNSIGNED NOT NULL,
+    day         TINYINT UNSIGNED NOT NULL,
+    hour        TINYINT UNSIGNED NOT NULL,
+    created_at  INT     UNSIGNED NOT NULL,
+    updated_at  INT     UNSIGNED NOT NULL,
+    PRIMARY KEY (`metrics_id`, `timestamp`),
+    KEY iymdh (`metrics_id`, `year`, `month`, `day`, `hour`)
 )
 SQL
 
