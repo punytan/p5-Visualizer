@@ -2,15 +2,17 @@ package Visualizer::Service;
 use sane;
 use parent 'Alpaca::Service';
 use Visualizer::Types;
+use Visualizer::Service::Exception;
 use Time::Piece;
 
 sub as_epoch { shift; localtime->strptime(shift, "%Y-%m-%d %T")->epoch }
 sub strftime { shift; shift->strftime('%Y-%m-%d %T') }
+sub throw    { shift; Visualizer::Service::Exception->throw(@_) }
 
 __PACKAGE__->config->add(
     DB_MASTER => {
         dsn  => 'dbi:mysql:visualizer',
-        user => undef, # TBD
+        user => 'root', # TBD
         pass => undef,
         attr => {
             RaiseError => 1,
@@ -27,7 +29,7 @@ __PACKAGE__->config->add(
     DB_SLAVE => [
         {
             dsn  => 'dbi:mysql:visualizer',
-            user => undef, # TBD
+            user => 'root', # TBD
             pass => undef,
             attr => {
                 RaiseError => 1,

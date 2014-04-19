@@ -7,9 +7,6 @@ use Mouse::Util::TypeConstraints;
 enum 'Metrics::Resolution'
     => qw/ Y YM YMD YMDH /;
 
-enum 'Metrics::Aggregator'
-    => qw/ count sum average max min /;
-
 subtype 'Metrics::DateTime'
     => as 'Str',
     => where {

@@ -28,7 +28,7 @@ sub create_hourly {
         };
 
         unless ($metrics) {
-            Visualizer::Exception->throw(ERROR_METRICS_NOT_FOUND);
+            $class->throw(ERROR_METRICS_NOT_FOUND);
         }
 
         my $now = time;

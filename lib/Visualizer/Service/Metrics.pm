@@ -25,7 +25,7 @@ sub get_metrics_metadata {
         if (my $metrics = $dbh->selectrow_hashref($stmt, undef, @bind)) {
             return $metrics;
         } else {
-            Visualizer::Exception->throw(ERROR_METRICS_NOT_FOUND);
+            $class->throw(ERROR_METRICS_NOT_FOUND);
         }
     });
 
