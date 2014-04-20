@@ -13,7 +13,7 @@ sub get_metrics_metadata {
     my $class = shift;
     my $args  = $class->validate(get_metrics_metadata => @_);
 
-    my $metrics = $class->connect('DB_SLAVE')->txn(sub {
+    my $metrics = $class->connect('DB_SLAVE')->run(sub {
         my $dbh = shift;
 
         my ($stmt, @bind) = $class->sql->select(

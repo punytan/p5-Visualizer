@@ -14,13 +14,13 @@ subtest 'success' => sub {
     my $guard = Test::Alpaca->init_database(
         DB_MASTER => {
             metrics => [
-                { metrics_name => 'foo', owner_id => 1 }
+                { metrics_name => 'foo', description => 1 }
             ],
         }
     );
 
     test_cmp_deeply 'should be created',
-        run => sub {
+        sub {
             Visualizer::Service::Metrics::Value->create_hourly(
                 name     => 'foo',
                 datetime => '2014-03-04 00:00:00',
@@ -31,7 +31,7 @@ subtest 'success' => sub {
                 { Slice => {} }
             );
         },
-        expect => [
+        [
             {
                 metrics_id => 1,
                 timestamp  => '2014-03-04 00:00:00',
@@ -47,15 +47,15 @@ subtest 'success' => sub {
 };
 
 subtest 'fail' => sub {
-    test_is_deeply 'should raise validation error if datetime is not rounded',
-        run => sub {
+    test_exception 'should raise validation error if datetime is not rounded',
+        sub {
             Visualizer::Service::Metrics::Value->create_hourly(
                 name     => 'foo',
                 datetime => '2014-03-04 20:40:42',
                 value    => 200,
             );
         },
-        exception => sub {
+        sub {
             my $e = shift;
             isa_ok $e, 'Alpaca::Exception::ValidationError';
             like $e, qr/Invalid value for 'datetime'/;
