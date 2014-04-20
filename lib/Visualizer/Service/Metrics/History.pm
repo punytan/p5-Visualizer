@@ -21,7 +21,7 @@ sub get_y_resolution {
 
         my ($stmt, @bind) = $class->sql->select(
             metrics_values => [
-                \'DATE_FORMAT(timestamp, "%Y-%m-01") AS datetime',
+                \'DATE_FORMAT(timestamp, "%Y-%m") AS datetime',
                 map { \"$_(value) AS $_" } @AGGREGATOR
             ],
             {

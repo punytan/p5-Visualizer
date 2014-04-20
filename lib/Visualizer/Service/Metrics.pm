@@ -32,6 +32,24 @@ sub get_metrics_metadata {
     return $metrics;
 }
 
+sub get_metrics {
+    my $class = shift;
+
+    my $all = $class->connect('DB_SLAVE')->run(sub {
+        my $dbh = shift;
+
+        my ($stmt, @bind) = $class->sql->select(
+            metrics => ['*'],
+            { },
+            { order_by => { metrics_id => 'ASC' } }
+        );
+
+        $dbh->selectall_arrayref($stmt, { Slice => {} }, @bind);
+    });
+
+    return $all;
+}
+
 1;
 __END__
 

@@ -90,9 +90,9 @@ test_cmp_deeply 'get_y_resolution',
         );
     },
     [
-        { datetime => '2014-03-01', sum => 1500, count => 5, max => 500, min => 100, avg => '300.0000' },
-        { datetime => '2014-04-01', sum => 2100, count => 3, max => 800, min => 600, avg => '700.0000' },
-        { datetime => '2014-05-01', sum => 900,  count => 1, max => 900, min => 900, avg => '900.0000' },
+        { datetime => '2014-03', sum => 1500, count => 5, max => 500, min => 100, avg => '300.0000' },
+        { datetime => '2014-04', sum => 2100, count => 3, max => 800, min => 600, avg => '700.0000' },
+        { datetime => '2014-05', sum => 900,  count => 1, max => 900, min => 900, avg => '900.0000' },
     ];
 
 done_testing;
