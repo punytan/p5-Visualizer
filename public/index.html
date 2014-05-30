@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/component/css3-github-buttons/gh-buttons.css">
+
+    <script src="/component/moment/moment.min.js"></script>
+    <script src="/component/jquery/jquery-2.1.0.min.js"></script>
+
+    <link rel="stylesheet" href="/component/morris/morris.css">
+    <script src="/component/morris/morris.js"></script>
+    <script src="/component/raphael/raphael-min.js"></script>
+
+    <script src="/js/app.js"> </script>
+    <script>
+      window.addEventListener('load', function() {
+        var vi = new Visualizer(jQuery, Morris);
+        vi.showMetricsList('div#metrics-list');
+      });
+    </script>
+
+    <title>Visualizer - Metrics</title>
+</head>
+<body>
+  <div id="navigator">
+    <a href="/index.html">Metrics</a>
+  </div>
+
+  <div id="metrics-list" class="table">
+    <div class="row">
+      <div class="cell left">Name</div>
+      <div class="cell left">Description</div>
+    </div>
+  </div>
+
+</body>
+</html>
+

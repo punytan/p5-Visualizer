@@ -6,23 +6,22 @@ __PACKAGE__->add(DB_MASTER => { test => <<SQL });
 CREATE TABLE credentials (
     token       VARCHAR(64)  NOT NULL,
     client_name VARCHAR(32)  NOT NULL,
-    metrics_id  INT UNSIGNED NOT NULL,
     created_at  INT UNSIGNED NOT NULL,
     updated_at  INT UNSIGNED NOT NULL,
-    PRIMARY KEY(`token`),
-    KEY metrics_id (`metrics_id`)
+    PRIMARY KEY(`token`)
 )
 SQL
 
 __PACKAGE__->add(DB_MASTER => { test => <<SQL });
-CREATE TABLE metrics (
-    metrics_id    INT UNSIGNED AUTO_INCREMENT,
-    metrics_name  VARCHAR(64)  NOT NULL,
-    description   VARCHAR(128) NOT NULL,
-    created_at  INT UNSIGNED NOT NULL,
-    updated_at  INT UNSIGNED NOT NULL,
-    PRIMARY KEY (`metrics_id`)
-)
+CREATE TABLE `metrics` (
+  `metrics_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `metrics_name` varchar(64) NOT NULL,
+  `description` varchar(128) NOT NULL,
+  `created_at` int(10) unsigned NOT NULL,
+  `updated_at` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`metrics_id`),
+  UNIQUE (`metrics_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 SQL
 
 __PACKAGE__->add(DB_MASTER => { test => <<SQL });

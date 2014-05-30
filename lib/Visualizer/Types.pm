@@ -18,6 +18,10 @@ subtype 'Metrics::Name'
     => as 'Str'
     => where { defined $_ && length $_ };
 
+subtype 'Credentials::Token'
+    => as 'Str'
+    => where { defined $_ && length $_ };
+
 subtype 'Metrics::Value'
     => as 'Int'
     => where { looks_like_number $_ };

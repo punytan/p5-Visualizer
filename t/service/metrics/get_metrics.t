@@ -1,4 +1,3 @@
-use sane;
 use Test::Alpaca;
 use Visualizer::Service::Metrics 'ERROR_METRICS_NOT_FOUND';
 
@@ -29,15 +28,15 @@ subtest 'success' => sub {
                 metrics_id   => 1,
                 metrics_name => 'foo',
                 description  => 'foo foo',
-                created_at => re(qr/\d+/),
-                updated_at => re(qr/\d+/),
+                created_at   => is_integer,
+                updated_at   => is_integer,
             },
             {
                 metrics_id   => 2,
                 metrics_name => 'bar',
                 description  => 'bar bar',
-                created_at => re(qr/\d+/),
-                updated_at => re(qr/\d+/),
+                created_at   => is_integer,
+                updated_at   => is_integer,
             }
         ];
 };

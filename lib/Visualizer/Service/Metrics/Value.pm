@@ -1,13 +1,14 @@
 package Visualizer::Service::Metrics::Value;
 use sane;
 use parent 'Visualizer::Service';
-use Visualizer::Constant 'ERROR_METRICS_NOT_FOUND';
+use Visualizer::Constant qw/ ERROR_METRICS_NOT_FOUND ERROR_CREDENTIAL_NOT_FOUND /;
 
 __PACKAGE__->add_validator(
     create_hourly => {
-        name     => { isa => 'Metrics::Name'     },
-        datetime => { isa => 'Metrics::DateTime' },
-        value    => { isa => 'Metrics::Value'    },
+        name     => { isa => 'Metrics::Name'      },
+        datetime => { isa => 'Metrics::DateTime'  },
+        value    => { isa => 'Metrics::Value'     },
+        token    => { isa => 'Credentials::Token' },
     }
 );
 
@@ -15,8 +16,21 @@ sub create_hourly {
     my $class = shift;
     my $args  = $class->validate(create_hourly => @_);
 
-    $class->connect('DB_MASTER')->txn(sub {
+    my $metrics = $class->connect('DB_MASTER')->txn(sub {
         my $dbh = shift;
+
+        my $credentials = do {
+            my ($stmt, @bind) = $class->sql->select(
+                credentials => ['*'], {
+                    token => $args->{token},
+                }
+            );
+            $dbh->selectrow_hashref($stmt, undef, @bind);
+        };
+
+        unless ($credentials) {
+            $class->throw(ERROR_CREDENTIAL_NOT_FOUND());
+        }
 
         my $metrics = do {
             my ($stmt, @bind) = $class->sql->select(
@@ -28,8 +42,14 @@ sub create_hourly {
         };
 
         unless ($metrics) {
-            $class->throw(ERROR_METRICS_NOT_FOUND);
+            $class->throw(ERROR_METRICS_NOT_FOUND());
         }
+
+        return $metrics;
+    });
+
+    $class->connect('DB_MASTER')->txn(sub {
+        my $dbh = shift;
 
         my $now = time;
         my ($stmt, @bind) = $class->sql->insert(

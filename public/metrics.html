@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/metrics.css">
+    <link rel="stylesheet" href="/component/css3-github-buttons/gh-buttons.css">
+
+    <script src="/component/moment/moment.min.js"></script>
+    <script src="/component/jquery/jquery-2.1.0.min.js"></script>
+
+    <link rel="stylesheet" href="/component/morris/morris.css">
+    <script src="/component/morris/morris.js"></script>
+    <script src="/component/raphael/raphael-min.js"></script>
+
+    <script src="/js/app.js"> </script>
+    <script>
+      window.addEventListener('load', function() {
+        var vi = new Visualizer(jQuery, Morris, moment);
+        var query = vi.getQueryParameters(),
+            base  = vi.getBaseDate();
+
+        vi.render(query.name, query.type, query.aggregator);
+        $('a[data-chart-resolution=year]' ).text(base.y);
+        $('a[data-chart-resolution=month]').text(base.ym);
+        $('a[data-chart-resolution=day]'  ).text(base.ymd);
+        $('a[data-chart-resolution=hour]' ).text(base.ymdh);
+        $('a[data-chart-resolution=hour]' ).text(base.ymdh);
+
+        $('div#metrics-summary').text(vi.getMetricsTitle());
+
+        $('a[data-chart-resolution').click(function() {
+          var resolution = $(this).data('chart-resolution');
+          location.href = vi.onClickChartResolution(resolution);
+        });
+
+        $('a[data-chart-type]').click(function() {
+          var type = $(this).data('chart-type');
+          location.href = vi.onClickChartType(type);
+        });
+
+        $('a[data-chart-aggregator]').click(function() {
+          var aggregator = $(this).data('chart-aggregator');
+          location.href = vi.onClickChartAggregator(aggregator);
+        });
+      });
+    </script>
+
+    <title>Visualizer - Chart</title>
+</head>
+<body>
+  <div id="navigator">
+    <a href="/index.html">Metrics</a>
+  </div>
+
+
+  <div id="menu">
+    <div>
+      <div id="chart-resolution-year" class="button-group">
+        <a class="button" data-chart-resolution="prev-year">&lt;</a>
+        <a class="button" data-chart-resolution="year">Year</a>
+        <a class="button" data-chart-resolution="next-year">&gt;</a>
+      </div>
+
+      <div id="chart-resolution-month" class="button-group">
+        <a class="button" data-chart-resolution="prev-month">&lt;</a>
+        <a class="button" data-chart-resolution="month">Month</a>
+        <a class="button" data-chart-resolution="next-month">&gt;</a>
+      </div>
+
+      <div id="chart-resolution-day" class="button-group">
+        <a class="button" data-chart-resolution="prev-day">&lt;</a>
+        <a class="button" data-chart-resolution="day">Day</a>
+        <a class="button" data-chart-resolution="next-day">&gt;</a>
+      </div>
+    </div>
+
+    <div>
+      <div id="chart-type" class="button-group">
+        <a class="button" data-chart-type="Bar">Bar</a>
+        <a class="button" data-chart-type="Line">Line</a>
+        <a class="button" data-chart-type="Area">Area</a>
+      </div>
+
+      <div id="chart-aggregator" class="button-group">
+        <a class="button" data-chart-aggregator="sum">SUM</a>
+        <a class="button" data-chart-aggregator="min">MIN</a>
+        <a class="button" data-chart-aggregator="max">MAX</a>
+        <a class="button" data-chart-aggregator="avg">AVG</a>
+        <a class="button" data-chart-aggregator="count">COUNT</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="metrics-summary"></div>
+
+  <div id="mychart"></div>
+
+  <div id="mydata" class="table">
+    <div class="row">
+      <div class="cell">DateTime</div>
+      <div class="cell">SUM</div>
+      <div class="cell">MIN</div>
+      <div class="cell">MAX</div>
+      <div class="cell">AVG</div>
+      <div class="cell">COUNT</div>
+    </div>
+  </div>
+
+</body>
+</html>
+

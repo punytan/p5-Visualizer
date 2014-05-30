@@ -13,6 +13,9 @@ sub dbh { Visualizer::Service::Metrics::Value->connect('DB_MASTER')->dbh }
 subtest 'success' => sub {
     my $guard = Test::Alpaca->init_database(
         DB_MASTER => {
+            credentials => [
+                { token => 'foo', client_name => 'client', created_at => time, updated_at => time }
+            ],
             metrics => [
                 { metrics_name => 'foo', description => 1 }
             ],
@@ -25,6 +28,7 @@ subtest 'success' => sub {
                 name     => 'foo',
                 datetime => '2014-03-04 00:00:00',
                 value    => 100,
+                token    => 'foo',
             );
             dbh->selectall_arrayref(
                 "SELECT * FROM metrics_values",

@@ -13,6 +13,9 @@ sub dbh { Visualizer::Service::Metrics::Value->connect('DB_MASTER')->dbh }
 
 my $guard = Test::Alpaca->init_database(
     DB_MASTER => {
+        credentials => [
+            { token => 'foo', client_name => 'client_name', created_at => time, updated_at => time }
+        ],
         metrics => [
             { metrics_name => 'foo', description => 1 }
         ],
@@ -36,6 +39,7 @@ for (@data) {
         name     => $_->[0],
         datetime => $_->[1],
         value    => $_->[2],
+        token    => 'foo',
     );
 }
 

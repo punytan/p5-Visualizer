@@ -1,0 +1,73 @@
+/* basic style */
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
+
+html, body {
+  width: 800px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Open Sans', 'sans-serif';
+}
+
+a {
+    color : #369;
+    text-decoration: none;
+}
+
+img {
+    border : 0px;
+}
+
+div#navigator {
+  line-height: 3rem;
+  font-size: 2rem;
+}
+
+div#menu {
+  text-align: center;
+}
+
+/* table */
+
+div.table {
+  width: 100%;
+  display: table;
+  text-align: center;
+  border: 1px solid #d4d4d4;
+}
+
+div.table div.row {
+  display: table-row;
+}
+
+div.table div.row div.cell {
+  display: table-cell;
+  border-right: 1px solid #d4d4d4;
+  line-height: 2rem;
+  height: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+div.table div.row div.cell.right {
+  text-align: right;
+}
+
+div.table div.row div.cell.left {
+  text-align: left;
+}
+
+div.table div.row div.cell:last-child {
+  border-right: none;
+}
+
+div.table div.row:nth-child(odd) {
+  background-color: #ececec;
+}
+

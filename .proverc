@@ -1,0 +1,6 @@
+-Ilib
+-It
+--verbose
+--timer
+-Pretty
+-MCarp::Always

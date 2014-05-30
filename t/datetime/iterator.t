@@ -1,4 +1,3 @@
-use sane;
 use Test::Alpaca;
 use Visualizer::DateTime::Iterator;
 
